@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "lammas-news"
+rootProject.name = "llamas_new"
 include(":app")

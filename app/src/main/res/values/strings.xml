@@ -1,12 +1,13 @@
 <resources>
-    <string name="app_name">lammas-news</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="app_name">llamas_new</string>
+    <string name="title_home">Home</string>
+    <string name="title_logo">LLAMAS NEWS</string>
+    <string name="title_saved">Saved</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="guest">Guest</string>
+    <string name="please_read_and_accept_term_and_conditions">Please read and accept term and conditions.</string>
+    <string name="llamas">LLAMAS</string>
+    <string name="default_web_client_id">457638452292-hn4e21rdd59fqbr3bgfvth14op03875v.apps.googleusercontent.com</string>
+    <string name="button_bookmark">button bookmark</string>
+    <string name="author_avatar">author avatar</string>
 </resources>

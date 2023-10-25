@@ -1,0 +1,9 @@
+[
+  { "id": 1, "name": "Hot news" },
+  { "id": 2, "name": "Sport" },
+  { "id": 3, "name": "Health" },
+  { "id": 4, "name": "Weather" },
+  { "id": 5, "name": "Environments" },
+  { "id": 6, "name": "Entertaiments" },
+  { "id": 7, "name": "Technology" }
+]

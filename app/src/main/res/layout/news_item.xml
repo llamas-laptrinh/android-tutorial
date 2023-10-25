@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="6dp"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_height="match_parent">
+<com.google.android.material.imageview.ShapeableImageView
+    android:src="@drawable/baseline_broken_image_64"
+    app:shapeAppearanceOverlay="@style/roundedCorners"
+    android:id="@+id/news_image"
+    android:adjustViewBounds="true"
+    android:scaleType="centerCrop"
+    android:layout_marginEnd="12dp"
+    android:layout_width="100dp"
+    android:layout_height="100dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:contentDescription="@string/author_avatar"
+                android:id="@+id/news_author_avatar"
+                android:layout_marginEnd="6dp"
+                android:src="@drawable/baseline_broken_image_64"
+                android:layout_width="24dp"
+                android:layout_height="24dp"/>
+            <TextView
+                android:id="@+id/news_author_name"
+                android:textColor="@color/black_200"
+                android:text="Marlina Kampret"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <TextView
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black_200"
+            android:id="@+id/news_title"
+            android:text="China set to shatter its wind and solar target five year"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textColor="@color/gray_200"
+            android:text="web, 05 july 2023 - Environment"
+            android:layout_width="200dp"
+            android:id="@+id/news_created_at"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+<ImageButton
+    android:backgroundTint="@color/white"
+    android:id="@+id/btn_book_mark"
+    android:src="@drawable/outline_bookmark_add_24"
+    android:layout_width="48dp"
+    android:contentDescription="@string/button_bookmark"
+    android:layout_height="48dp"
+    />
+
+</LinearLayout>

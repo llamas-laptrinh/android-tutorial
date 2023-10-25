@@ -1,4 +1,4 @@
-package com.example.lammas_news;
+package com.dev.llamas_new;
 
 import org.junit.Test;
 
