@@ -30,6 +30,18 @@ public class NewsItem implements Serializable {
         this.view_count = viewCount;
     }
 
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
+
+    public void setLike_count(int like_count) {
+        this.like_count = like_count;
+    }
+
+    public void setView_count(int view_count) {
+        this.view_count = view_count;
+    }
+
     public String getNew_id() {
         return new_id;
     }

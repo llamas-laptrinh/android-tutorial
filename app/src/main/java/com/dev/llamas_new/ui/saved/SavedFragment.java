@@ -4,13 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.dev.llamas_new.R;
 import com.dev.llamas_new.databinding.FragmentSavedBinding;
+import com.dev.llamas_new.firebase.Firebase;
+import com.dev.llamas_new.ui.home.NewsItem;
+
+import java.util.ArrayList;
 
 public class SavedFragment extends Fragment {
 
@@ -25,7 +31,13 @@ public class SavedFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textDashboard;
+
+        ListView listView = root.findViewById(R.id.saved_news);
+        listView.setEmptyView(textView);
+
         savedViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        ArrayList<NewsItem>  listNewsItem = new ArrayList<>();
+        new Firebase(listView,listNewsItem, root.getContext()).getSaved();
         return root;
     }
 

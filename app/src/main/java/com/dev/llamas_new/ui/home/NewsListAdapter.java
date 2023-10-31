@@ -1,6 +1,7 @@
 package com.dev.llamas_new.ui.home;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,25 +66,32 @@ public class NewsListAdapter extends BaseAdapter {
         Picasso.with(context).load(item.getNews_image()).into(newsImage);
         Picasso.with(context).load(item.getNews_author_avatar()).into(newsAuthorAvatar);
 
-        savedBtn.setOnClickListener(view1 -> {
-            boolean value = true;
-            int color = R.color.primary;
-            if (item.getIs_saved()){
-                value = false;
-                color = R.color.gray_200;
-            }
-            savedBtn.setColorFilter(ContextCompat.getColor(context, color), android.graphics.PorterDuff.Mode.SRC_IN);
-            new Firebase().addToSaved(item.getNew_id(),value);
-            notifyDataSetChanged();
-           });
         if (item.getIs_saved()){
-            savedBtn.setImageResource(R.drawable.baseline_bookmark_24);
-            savedBtn.setColorFilter(ContextCompat.getColor(context, R.color.primary), android.graphics.PorterDuff.Mode.SRC_IN);
+           setActiveButton(savedBtn,item.getIs_saved());
         }
+
+        savedBtn.setOnClickListener(view1 -> {;
+            boolean isAdd = !item.getIs_saved();
+
+            new Firebase().savedItem(item.getNew_id(),item.getIs_saved());
+            item.setIs_saved(isAdd);
+            setActiveButton(savedBtn, isAdd);
+           });
         newsTitle.setText(item.getNews_title());
         newsAuthorName.setText(item.getNews_author_name());
         newsCreatedAt.setText(item.getNews_created_at());
 
         return viewProduct;
     }
+   private  void  setActiveButton(ImageButton imageButton, boolean isActive){
+        int color = R.color.primary;
+        int resource = R.drawable.baseline_bookmark_24;
+        if (!isActive){
+            color = R.color.gray_200;
+            resource = R.drawable.outline_bookmark_add_24;
+        }
+       imageButton.setImageResource(resource);
+       imageButton.setColorFilter(ContextCompat.getColor(context, color), android.graphics.PorterDuff.Mode.SRC_IN);
+   }
+
 }

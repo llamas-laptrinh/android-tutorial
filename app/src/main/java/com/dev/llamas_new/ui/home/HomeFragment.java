@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         listNewsItem = new ArrayList<>();
         categoryList = new ArrayList<>();
 
-        final RecyclerView carouselRecyclerView =root.findViewById(R.id.carousel_recycler_view);
+        final RecyclerView carouselRecyclerView =binding.carouselRecyclerView;
         final ListView listView = root.findViewById(R.id.news);
         final RecyclerView recyclerView =  root.findViewById(R.id.category_list);
 
