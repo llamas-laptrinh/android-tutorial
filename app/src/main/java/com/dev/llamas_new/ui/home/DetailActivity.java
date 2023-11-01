@@ -7,10 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dev.llamas_new.R;
+import com.dev.llamas_new.firebase.Firebase;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -19,6 +22,9 @@ public class DetailActivity extends AppCompatActivity {
     TextView textView;
     TextView tv_item_title, tv_item_like_count, tv_item_view_count,tv_author_name;
     ImageView iv_item_banner,iv_author_avatar;
+
+    LinearLayout btn_like;
+    Firebase firebase;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +46,20 @@ public class DetailActivity extends AppCompatActivity {
         tv_author_name = findViewById(R.id.item_author_name);
         textView = findViewById(R.id.item_detail);
 
+        btn_like = findViewById(R.id.btn_like);
+
+        if (true){
+            btn_like.setActivated(false);
+            tv_item_like_count.setTextColor(getResources().getColor(R.color.primary));
+        }
+
+
         NewsItem item = (NewsItem)getIntent().getSerializableExtra("ITEM");
+        firebase = new Firebase();
         assert item != null;
+
+
+
         Picasso.with(getApplicationContext()).load(item.getNews_image()).into(iv_item_banner);
         Picasso.with(getApplicationContext()).load(item.getNews_author_avatar()).into(iv_author_avatar);
         tv_item_title.setText(item.getNews_title());
@@ -49,6 +67,12 @@ public class DetailActivity extends AppCompatActivity {
         tv_item_view_count.setText(formatValue(item.getView_count()));
         tv_author_name.setText(item.getNews_author_name()+" - "+item.getNews_created_at());
         textView.setText(item.getDetail());
+
+        firebase.updateViewCount(item.getNew_id(),item.getView_count());
+
+        btn_like.setOnClickListener(view -> {
+            firebase.updateLikeCount(item.getNew_id(),item.getLike_count());
+        });
     }
 
     @Override

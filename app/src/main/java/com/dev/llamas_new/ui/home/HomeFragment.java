@@ -50,7 +50,8 @@ public class HomeFragment extends Fragment {
         final ListView listView = root.findViewById(R.id.news);
         final RecyclerView recyclerView =  root.findViewById(R.id.category_list);
 
-        Firebase firebase = new Firebase(listView,listNewsItem, root.getContext());
+        NewsListAdapter adapter = new NewsListAdapter(getContext(),listNewsItem);
+        Firebase firebase = new Firebase(listView,listNewsItem, root.getContext(),adapter);
 
         CarouselLayoutManager carouselLayoutManager = new CarouselLayoutManager();
         carouselRecyclerView.setLayoutManager(carouselLayoutManager);
@@ -70,8 +71,12 @@ public class HomeFragment extends Fragment {
 
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
            Intent intent = new Intent(getContext(),DetailActivity.class);
-           intent.putExtra("ITEM", listNewsItem.get(i));
+           NewsItem item = listNewsItem.get(i);
+           item.setView_count(item.getView_count()+1);
+           listNewsItem.clear();
+           intent.putExtra("ITEM", item);
            startActivity(intent);
+
         });
 
 //        final TextView textView = binding.textHome;

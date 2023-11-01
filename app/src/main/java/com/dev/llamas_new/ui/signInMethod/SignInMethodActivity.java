@@ -56,10 +56,10 @@ public class SignInMethodActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
-//        ActionBar actionBar = getSupportActionBar();
-//
-//        assert actionBar != null;
-//        actionBar.hide();
+        ActionBar actionBar = getSupportActionBar();
+
+        assert actionBar != null;
+        actionBar.hide();
         activityResultLauncher =registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {

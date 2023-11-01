@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class NewsListAdapter extends BaseAdapter {
 
     final Context context;
-    final ArrayList<NewsItem> listNewsItem;
+    final  ArrayList<NewsItem> listNewsItem;
 
     public NewsListAdapter(Context context, ArrayList<NewsItem> listNewsItem) {
         this.context = context;

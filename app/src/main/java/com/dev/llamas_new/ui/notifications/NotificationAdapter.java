@@ -1,40 +1,39 @@
 package com.dev.llamas_new.ui.notifications;
 
-import android.view.LayoutInflater;
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TwoLineListItem;
+import android.widget.BaseAdapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
 
-import com.dev.llamas_new.R;
-import com.dev.llamas_new.ui.home.CategoryAdapter;
+public class NotificationAdapter extends BaseAdapter {
 
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
+    final Context context;
+   final ArrayList<NotificationItems> itemsArrayList;
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.notification_items, parent, false);
-        return new ViewHolder(view);
+    public NotificationAdapter(Context context, ArrayList<NotificationItems> itemsArrayList) {
+        this.context = context;
+        this.itemsArrayList = itemsArrayList;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public Object getItem(int i) {
+        return null;
+    }
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        return null;
     }
 }

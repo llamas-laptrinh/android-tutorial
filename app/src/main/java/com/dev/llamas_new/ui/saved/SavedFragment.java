@@ -15,6 +15,7 @@ import com.dev.llamas_new.R;
 import com.dev.llamas_new.databinding.FragmentSavedBinding;
 import com.dev.llamas_new.firebase.Firebase;
 import com.dev.llamas_new.ui.home.NewsItem;
+import com.dev.llamas_new.ui.home.NewsListAdapter;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,8 @@ public class SavedFragment extends Fragment {
 
         savedViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         ArrayList<NewsItem>  listNewsItem = new ArrayList<>();
-        new Firebase(listView,listNewsItem, root.getContext()).getSaved();
+        NewsListAdapter adapter = new NewsListAdapter(getContext(),listNewsItem);
+        new Firebase(listView,listNewsItem, root.getContext(),adapter).getSaved();
         return root;
     }
 

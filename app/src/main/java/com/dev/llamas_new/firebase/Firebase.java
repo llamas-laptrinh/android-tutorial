@@ -28,12 +28,15 @@ import java.util.Objects;
 
 public class Firebase {
     public  static  String NEWS ="news";
-    public  static  String SAVED ="Saved";
+    public  static  String SAVED ="saved";
+    public  static  String LIKES ="likes";
     public static String CATEGORIES ="categories";
+    public  static String VIEW_COUNT ="view_count";
+    public  static String LIKE_COUNT ="like_count";
     private DatabaseReference mDatabase;
     ListView listView;
     ArrayList<NewsItem> listNewsItem;
-    NewsListAdapter newsListAdapter;
+    public   NewsListAdapter newsListAdapter;
     Context context;
     DatabaseReference savedRef;
 
@@ -41,11 +44,12 @@ public class Firebase {
     public  Firebase(){
       initFirebase();
     }
-    public Firebase(ListView listView, ArrayList<NewsItem> listNewsItem, Context context) {
+    public Firebase(ListView listView, ArrayList<NewsItem> listNewsItem, Context context, NewsListAdapter adapter) {
         initFirebase();
         this.listView = listView;
         this.listNewsItem = listNewsItem;
         this.context = context;
+        this.newsListAdapter = adapter;
     }
 
     void initFirebase(){
@@ -76,6 +80,31 @@ public class Firebase {
             }
         });
     }
+    public void updateViewCount(String id, int value){
+        DatabaseReference ref = this.mDatabase.child(NEWS).child(id).child(VIEW_COUNT);
+        ref.setValue(value);
+    }
+
+    public void updateLikeCount(String id, int value){
+        String user_id  = Objects.requireNonNull(FirebaseAuth.getInstance().getUid());
+        DatabaseReference likesRef = this.mDatabase.child(LIKES).child(user_id);
+        likesRef.child(id)
+                .get()
+                .addOnCompleteListener(task -> {
+            int like =value;
+            if (task.getResult().exists()){
+                like -=1;
+                likesRef.removeValue();
+            }
+            else {
+                like+=1;
+                likesRef.child(id).setValue(id);
+            }
+            DatabaseReference ref = this.mDatabase.child(NEWS).child(id).child(LIKE_COUNT);
+            ref.setValue(like);
+        });
+    }
+
 
     public void savedItem(String id, boolean isAdd){
       if (isAdd){
@@ -85,6 +114,7 @@ public class Firebase {
       }
 
     }
+
     public  void getCategory (RecyclerView recyclerView, ArrayList<Category> categoryList){
         this.mDatabase.child(CATEGORIES).addValueEventListener(new ValueEventListener() {
             @Override
@@ -95,7 +125,9 @@ public class Firebase {
                 }
                 CategoryAdapter categoryAdapter = new CategoryAdapter(categoryList);
                 categoryAdapter.setOnClickListener((position, model) -> {
-                    listNewsItem.clear();
+
+                listNewsItem.clear();
+
                 mDatabase.child(NEWS)
                         .orderByChild("category_id")
                         .equalTo(model.getId())
@@ -143,14 +175,13 @@ public class Firebase {
                         item.setIs_saved(task.getResult().exists());
                         listNewsItem.add(item);
                         if (listNewsItem.size() == snapshot.getChildrenCount()) {
-                            listView.setAdapter(new NewsListAdapter(context, listNewsItem));
+                            listView.setAdapter(newsListAdapter);
                         }
                     });
 
                 }
 
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
