@@ -1,7 +1,10 @@
 package com.dev.llamas_new.firebase;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -10,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev.llamas_new.ui.home.Category;
 import com.dev.llamas_new.ui.home.CategoryAdapter;
+import com.dev.llamas_new.ui.home.DetailActivity;
 import com.dev.llamas_new.ui.home.NewsItem;
 import com.dev.llamas_new.ui.home.NewsListAdapter;
 import com.dev.llamas_new.ui.notifications.NotificationAdapter;
@@ -35,12 +39,16 @@ public class Firebase {
     public  static String VIEW_COUNT ="view_count";
     public  static String LIKE_COUNT ="like_count";
     private DatabaseReference mDatabase;
-    ListView listView;
-    ArrayList<NewsItem> listNewsItem;
-    public   NewsListAdapter newsListAdapter;
+    public ListView listView;
+    public ArrayList<NewsItem> listNewsItem;
+    public NewsListAdapter newsListAdapter;
     Context context;
-    DatabaseReference savedRef;
+    public DatabaseReference savedRef;
 
+
+    public DatabaseReference getmDatabase() {
+        return mDatabase;
+    }
 
     public  Firebase(){
       initFirebase();
@@ -58,9 +66,11 @@ public class Firebase {
         this.savedRef =this.mDatabase.child(SAVED).child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
     }
 
+    public DatabaseReference getDetail(String id){
+        return mDatabase.child(NEWS).child(id);
+    }
     public void getSaved() {
         savedRef.get().addOnCompleteListener(savedSnapshot -> {
-            ArrayList<NewsItem> listNewsItem = new ArrayList<>();
             for (DataSnapshot postSnapshot : savedSnapshot.getResult().getChildren()) {
                 String id = postSnapshot.getValue(String.class);
                 assert id != null;
@@ -86,24 +96,10 @@ public class Firebase {
         ref.setValue(value);
     }
 
-    public void updateLikeCount(String id, int value){
+    public DatabaseReference updateLikeCount(){
         String user_id  = Objects.requireNonNull(FirebaseAuth.getInstance().getUid());
         DatabaseReference likesRef = this.mDatabase.child(LIKES).child(user_id);
-        likesRef.child(id)
-                .get()
-                .addOnCompleteListener(task -> {
-            int like =value;
-            if (task.getResult().exists()){
-                like -=1;
-                likesRef.removeValue();
-            }
-            else {
-                like+=1;
-                likesRef.child(id).setValue(id);
-            }
-            DatabaseReference ref = this.mDatabase.child(NEWS).child(id).child(LIKE_COUNT);
-            ref.setValue(like);
-        });
+       return likesRef;
     }
 
 
@@ -160,11 +156,11 @@ public class Firebase {
             }
         });
     }
-    public  void getNews (){
 
-        if (listView == null) {
-            return;
-        }
+    public  DatabaseReference getNewsRef (){
+        return  this.mDatabase.child(NEWS);
+    }
+    public  void getNews (){
         this.mDatabase.child(NEWS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

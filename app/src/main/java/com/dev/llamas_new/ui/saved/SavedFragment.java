@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class SavedFragment extends Fragment {
 
     private FragmentSavedBinding binding;
+    ArrayList<NewsItem>  listNewsItem;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,21 +39,30 @@ public class SavedFragment extends Fragment {
         ListView listView = root.findViewById(R.id.saved_news);
         listView.setEmptyView(textView);
 
-        savedViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        ArrayList<NewsItem>  listNewsItem = new ArrayList<>();
+        listNewsItem = new ArrayList<>();
+
         NewsListAdapter adapter = new NewsListAdapter(getContext(),listNewsItem);
-        new Firebase(listView,listNewsItem, root.getContext(),adapter).getSaved();
+        Firebase firebase = new Firebase(listView,listNewsItem, root.getContext(),adapter);
+
+        firebase.getSaved();
 
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             Intent intent = new Intent(getContext(), DetailActivity.class);
             NewsItem item = listNewsItem.get(i);
             item.setView_count(item.getView_count()+1);
-            listNewsItem.clear();
             intent.putExtra("ITEM", item);
             startActivity(intent);
-
         });
+
+        savedViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//        savedViewModel.getList().observe(getViewLifecycleOwner(),listNewsItem::addAll);
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override

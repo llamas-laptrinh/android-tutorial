@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.dev.llamas_new.firebase.Firebase;
 import com.google.android.material.carousel.CarouselLayoutManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
@@ -34,10 +36,11 @@ public class HomeFragment extends Fragment {
     ArrayList<NewsItem> listNewsItem;
     ArrayList<Category> categoryList;
     ArrayList<String> carouselList;
+    NewsListAdapter adapter;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        HomeViewModel homeViewModel =
-//                new ViewModelProvider(this).get(HomeViewModel.class);
+        HomeViewModel homeViewModel =
+                new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -50,7 +53,7 @@ public class HomeFragment extends Fragment {
         final ListView listView = root.findViewById(R.id.news);
         final RecyclerView recyclerView =  root.findViewById(R.id.category_list);
 
-        NewsListAdapter adapter = new NewsListAdapter(getContext(),listNewsItem);
+        adapter = new NewsListAdapter(getContext(),listNewsItem);
         Firebase firebase = new Firebase(listView,listNewsItem, root.getContext(),adapter);
 
         CarouselLayoutManager carouselLayoutManager = new CarouselLayoutManager();
@@ -76,12 +79,19 @@ public class HomeFragment extends Fragment {
            listNewsItem.clear();
            intent.putExtra("ITEM", item);
            startActivity(intent);
-
         });
 
-//        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textHome;
+        listView.setEmptyView(textView);
+        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//        homeViewModel.getList().observe(getViewLifecycleOwner(),listNewsItem::addAll);
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
