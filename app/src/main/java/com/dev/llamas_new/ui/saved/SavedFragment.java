@@ -1,5 +1,6 @@
 package com.dev.llamas_new.ui.saved;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.dev.llamas_new.R;
 import com.dev.llamas_new.databinding.FragmentSavedBinding;
 import com.dev.llamas_new.firebase.Firebase;
+import com.dev.llamas_new.ui.home.DetailActivity;
 import com.dev.llamas_new.ui.home.NewsItem;
 import com.dev.llamas_new.ui.home.NewsListAdapter;
 
@@ -40,6 +42,16 @@ public class SavedFragment extends Fragment {
         ArrayList<NewsItem>  listNewsItem = new ArrayList<>();
         NewsListAdapter adapter = new NewsListAdapter(getContext(),listNewsItem);
         new Firebase(listView,listNewsItem, root.getContext(),adapter).getSaved();
+
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(getContext(), DetailActivity.class);
+            NewsItem item = listNewsItem.get(i);
+            item.setView_count(item.getView_count()+1);
+            listNewsItem.clear();
+            intent.putExtra("ITEM", item);
+            startActivity(intent);
+
+        });
         return root;
     }
 

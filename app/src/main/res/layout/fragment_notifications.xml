@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="6dp"
     tools:context=".ui.notifications.NotificationsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
+        android:divider="#00000000"
+        android:dividerHeight="12dp"
         android:id="@+id/notification_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

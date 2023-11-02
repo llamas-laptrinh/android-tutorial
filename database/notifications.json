@@ -1,1 +1,38 @@
-[{ "id": 1, "title": "", "content": "", "type": "" }]
+[
+  {
+    "id": 12345,
+    "type": "Breaking News",
+    "title": "Earthquake strikes near San Francisco",
+    "content": "A magnitude 6.0 earthquake struck near San Francisco on Wednesday morning, causing widespread damage and power outages."
+  },
+  {
+    "id": 54321,
+    "type": "Sports",
+    "title": "Warriors defeat Celtics in Game 7 of NBA Finals",
+    "content": "The Golden State Warriors defeated the Boston Celtics 103-90 in Game 7 of the NBA Finals to win their fourth championship in eight years."
+  },
+  {
+    "id": 98765,
+    "type": "Entertainment",
+    "title": "New trailer for Stranger Things season 4 released",
+    "content": "The new trailer for the fourth season of the popular Netflix show Stranger Things was released today, and it looks like it's going to be the scariest season yet."
+  },
+  {
+    "id": 87654,
+    "type": "Business",
+    "title": "Stock market closes down sharply after Fed interest rate hike",
+    "content": "The stock market closed down sharply on Wednesday after the Federal Reserve raised interest rates by 0.75 percentage points."
+  },
+  {
+    "id": 65432,
+    "type": "Warriors",
+    "title": "Warriors to play Clippers tonight",
+    "content": "The Golden State Warriors will play the Los Angeles Clippers at Chase Center tonight at 7:30 PM."
+  },
+  {
+    "id": 21345,
+    "type": "Tesla",
+    "title": "Tesla stock price drops after Elon Musk sells shares",
+    "content": "The price of Tesla stock dropped on Wednesday after Elon Musk sold 7.92 million shares of the company."
+  }
+]

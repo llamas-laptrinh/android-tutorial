@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:padding="12dp"
+    android:gravity="center_vertical"
     android:layout_height="match_parent">
+
    <ImageView
+       android:background="@drawable/rounded_shape"
        android:id="@+id/notification_icon"
-       android:src="@drawable/baseline_broken_image_64"
+       android:src="@drawable/baseline_notifications_active_24"
        android:contentDescription="@string/title_logo"
        android:layout_width="wrap_content"
-       android:layout_marginRight="12dp"
-       android:layout_height="wrap_content"/>
+       android:layout_marginEnd="12dp"
+       android:layout_height="wrap_content"
+       app:tint="@color/primary" />
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -17,7 +23,7 @@
        <TextView
            android:id="@+id/notification_title"
            android:text="title"
-           android:textSize="24sp"
+           android:textSize="18sp"
            android:textStyle="bold"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"/>
@@ -27,6 +33,6 @@
            android:textColor="@color/gray_200"
            android:text="content"
            android:layout_width="wrap_content"
-           android:layout_height="wrap_content"/>
+           android:layout_height="16dp"/>
     </LinearLayout>
 </LinearLayout>

@@ -12,8 +12,8 @@ import com.dev.llamas_new.ui.home.Category;
 import com.dev.llamas_new.ui.home.CategoryAdapter;
 import com.dev.llamas_new.ui.home.NewsItem;
 import com.dev.llamas_new.ui.home.NewsListAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.dev.llamas_new.ui.notifications.NotificationAdapter;
+import com.dev.llamas_new.ui.notifications.NotificationItems;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +30,7 @@ public class Firebase {
     public  static  String NEWS ="news";
     public  static  String SAVED ="saved";
     public  static  String LIKES ="likes";
+    public  static  String NOTIFICATIONS ="notifications";
     public static String CATEGORIES ="categories";
     public  static String VIEW_COUNT ="view_count";
     public  static String LIKE_COUNT ="like_count";
@@ -189,4 +190,18 @@ public class Firebase {
         });
     }
 
+
+
+    public void getNotifications(Context context,ListView notificationListView, ArrayList<NotificationItems> notificationItems) {
+        this.mDatabase.child(NOTIFICATIONS).get().addOnCompleteListener(snapshot -> {
+            for (DataSnapshot postSnapshot: snapshot.getResult().getChildren()) {
+                NotificationItems item = postSnapshot.getValue(NotificationItems.class);
+                assert item != null;
+                item.setNoti_id(postSnapshot.getKey());
+                notificationItems.add(item);
+            }
+            NotificationAdapter adapter = new NotificationAdapter(context,notificationItems);
+            notificationListView.setAdapter(adapter);
+        });
+    }
 }
