@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,8 +19,10 @@ import com.dev.llamas_new.firebase.Firebase;
 import com.dev.llamas_new.ui.home.DetailActivity;
 import com.dev.llamas_new.ui.home.NewsItem;
 import com.dev.llamas_new.ui.home.NewsListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SavedFragment extends Fragment {
 
@@ -36,7 +39,10 @@ public class SavedFragment extends Fragment {
 
         final TextView textView = binding.textDashboard;
 
+        FirebaseAuth auth =  FirebaseAuth.getInstance();
         ListView listView = root.findViewById(R.id.saved_news);
+        Button signOut = binding.btnSignOut;
+        TextView userId = binding.userId;
         listView.setEmptyView(textView);
 
         listNewsItem = new ArrayList<>();
@@ -54,6 +60,10 @@ public class SavedFragment extends Fragment {
             startActivity(intent);
         });
 
+        signOut.setOnClickListener(view -> {
+            auth.signOut();
+        });
+        userId.setText(auth.getUid());
         savedViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 //        savedViewModel.getList().observe(getViewLifecycleOwner(),listNewsItem::addAll);
         return root;

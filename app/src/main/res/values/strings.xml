@@ -10,4 +10,5 @@
     <string name="default_web_client_id">457638452292-hn4e21rdd59fqbr3bgfvth14op03875v.apps.googleusercontent.com</string>
     <string name="button_bookmark">button bookmark</string>
     <string name="author_avatar">author avatar</string>
+    <string name="sign_out">Sign Out</string>
 </resources>
