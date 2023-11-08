@@ -2,6 +2,7 @@ package com.dev.llamas_new.ui.saved;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.dev.llamas_new.firebase.Firebase;
 import com.dev.llamas_new.ui.home.DetailActivity;
 import com.dev.llamas_new.ui.home.NewsItem;
 import com.dev.llamas_new.ui.home.NewsListAdapter;
+import com.dev.llamas_new.ui.signInMethod.SignInMethodActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class SavedFragment extends Fragment {
 
     private FragmentSavedBinding binding;
     ArrayList<NewsItem>  listNewsItem;
+    FirebaseAuth auth;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class SavedFragment extends Fragment {
 
         final TextView textView = binding.textDashboard;
 
-        FirebaseAuth auth =  FirebaseAuth.getInstance();
+        auth =  FirebaseAuth.getInstance();
         ListView listView = root.findViewById(R.id.saved_news);
         Button signOut = binding.btnSignOut;
         TextView userId = binding.userId;
@@ -62,6 +65,7 @@ public class SavedFragment extends Fragment {
 
         signOut.setOnClickListener(view -> {
             auth.signOut();
+          startActivity( new Intent(getContext(), SignInMethodActivity.class));
         });
         userId.setText(auth.getUid());
         savedViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
@@ -72,6 +76,7 @@ public class SavedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("TAG", "onResume"+ FirebaseAuth.getInstance().getUid());
 
     }
 

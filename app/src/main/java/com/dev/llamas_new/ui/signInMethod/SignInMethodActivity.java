@@ -86,6 +86,7 @@ public class SignInMethodActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        Log.d("TAG", "onStart"+currentUser);
         updateUI(currentUser);
     }
 
@@ -143,6 +144,7 @@ public class SignInMethodActivity extends AppCompatActivity {
         }
     }
     private void updateUI(Object o) {
+        Log.d("TAG", "updateUI"+ o);
         if (o != null) {
             // When user already sign in redirect to profile activity
             startActivity(new Intent(SignInMethodActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

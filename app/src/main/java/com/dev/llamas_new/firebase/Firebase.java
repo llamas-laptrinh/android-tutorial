@@ -63,7 +63,9 @@ public class Firebase {
 
     void initFirebase(){
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
-        this.savedRef =this.mDatabase.child(SAVED).child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
+        if(FirebaseAuth.getInstance().getUid() != null){
+            this.savedRef =this.mDatabase.child(SAVED).child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()));
+        }
     }
 
     public DatabaseReference getDetail(String id){
@@ -98,8 +100,7 @@ public class Firebase {
 
     public DatabaseReference updateLikeCount(){
         String user_id  = Objects.requireNonNull(FirebaseAuth.getInstance().getUid());
-        DatabaseReference likesRef = this.mDatabase.child(LIKES).child(user_id);
-       return likesRef;
+        return this.mDatabase.child(LIKES).child(user_id);
     }
 
 
@@ -143,7 +144,7 @@ public class Firebase {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
                 });
@@ -152,7 +153,7 @@ public class Firebase {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -181,7 +182,7 @@ public class Firebase {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }
